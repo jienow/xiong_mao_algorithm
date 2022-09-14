@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}\\build"
+        //cwd是路径，表示再下面的内容中，必须再本目录下面运行
+    },
+    "tasks": [
+        {
+            //cmake .. 命令
+            "type": "shell",
+            "label": "cmake",
+            "command": "cmake",
+            "args": [
+                //参数
+                ".."
+                
+            ]
+        },
+        {
+            //mingw32-make.exe 命令
+            "label": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command":"mingw32-make.exe",
+            "args": []
+        },
+        {
+            "label": "Build",
+            "dependsOn":[
+                "cmake",
+                "make"
+            ]
+        }
+    ]
+}
