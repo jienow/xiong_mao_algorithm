@@ -44,35 +44,70 @@ $\-1000 \\le 矩阵内元素的值 \\le 1000$
     2 2 2 2
 */
 
+//#include <iostream>
+//using namespace std;
+//const int N = 1010;
+//int b[N][N], n, m, k;
+//void insert(int x1,int y1,int x2,int y2,int num){
+//    b[x1][y1] += num;
+//    b[x2 + 1][y1] -= num;
+//    b[x1][y1 + 1] -= num;
+//    b[x2 + 1][y2 + 1] += num;
+//}
+//int main(){
+//    cin >> n >> m >> k;
+//    for (int i = 1; i <= n;i ++)
+//        for (int j = 1; j <= m;j ++){
+//            int num;
+//            cin >> num;
+//            insert(i, j, i, j, num);
+//        }
+//    while(k--){
+//        int x1, x2, y1, y2, num;
+//        cin >> x1 >> y1 >> x2 >> y2 >> num;
+//        insert(x1, y1, x2, y2, num);
+//    }
+//    for (int i = 1; i <= n;i++){
+//        for (int j = 1; j <= m;j++){
+//            b[i][j] += b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1];
+//            printf("%d ", b[i][j]);
+//        }
+//        puts("");
+//    }
+//    return 0;
+//}
+
 #include <iostream>
 using namespace std;
 const int N = 1010;
-int b[N][N], n, m, k;
+int b[N][N];
+int n, m, k;
 void insert(int x1,int y1,int x2,int y2,int num){
     b[x1][y1] += num;
     b[x2 + 1][y1] -= num;
-    b[x1][y1 + 1] -= num;
+    b[x1][y2 + 1] -= num;
     b[x2 + 1][y2 + 1] += num;
 }
 int main(){
     cin >> n >> m >> k;
     for (int i = 1; i <= n;i ++)
-        for (int j = 1; j <= m;j ++){
+        for (int j = 1; j <= m; j++){
             int num;
             cin >> num;
             insert(i, j, i, j, num);
         }
     while(k--){
-        int x1, x2, y1, y2, num;
+        int x1, y1, x2, y2, num;
         cin >> x1 >> y1 >> x2 >> y2 >> num;
         insert(x1, y1, x2, y2, num);
     }
-    for (int i = 1; i <= n;i++){
-        for (int j = 1; j <= m;j++){
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m;j ++){
             b[i][j] += b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1];
             printf("%d ", b[i][j]);
         }
         puts("");
     }
-    return 0;
+
+        return 0;
 }
