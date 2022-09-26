@@ -56,18 +56,31 @@
 #include <iostream>
 using namespace std;
 const int N = 1e6 + 10;
-int q[N], a[N], n, k;
-int hh, tt = -1;
+int q[N], a[N], hh, tt = -1;
+int n, k;
 int main(){
-    cin >> n;
-    for (int i = 0; i < n;i++)
+    cin >> n >> k;
+    for (int i = 0; i < n; i++)
         cin >> a[i];
-    for (int i = 0; i < n; i++){
-        while (hh <= tt && i - hh + 1 > k)
+    for (int i = 0; i < n;i ++){
+        if(hh<=tt && i-k+1>q[hh])
             hh++;
-        while(hh < tt &&a[q[tt]] >= a[i])
+        while(hh<=tt && a[q[tt]] >= a[i])
             tt--;
-        
+        q[++tt] = i;
+        if (i+1 >= k)
+            cout << a[q[hh]] << " ";
+    }
+    puts("");
+    hh = 0, tt = -1;
+    for (int i = 0; i < n;i ++){
+        if(hh <= tt && i-k+1>q[hh])
+            hh++;
+        while(hh <= tt && a[q[tt]] <= a[i])
+            tt--;
+        q[++tt] = i;
+        if(i+1>=k)
+            cout << a[q[hh]] << " ";
     }
     return 0;
 }
