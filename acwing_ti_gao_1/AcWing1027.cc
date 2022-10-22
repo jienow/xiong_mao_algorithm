@@ -54,7 +54,7 @@ int w[N][N];
 int n;
 int main() {
 	ios::sync_with_stdio(false);
-	int a, b, c;
+	int a, b, c; 
 	cin >> n;
 	while (cin >> a >> b >> c, a || b || c)w[a][b] = c;
 	for (int k = 2; k <= n * 2; k++)
