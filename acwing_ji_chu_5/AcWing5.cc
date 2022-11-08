@@ -42,6 +42,7 @@ $0 \\lt v\_i, w\_i, s\_i \\le 2000$
 
 #include <vector>
 #include <iostream>
+#include <queue>
 using namespace std;
 const int N = 1010;
 struct Good {
