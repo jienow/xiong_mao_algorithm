@@ -8,7 +8,7 @@ private:
 	int* p;
 public:
 	CArray(int n){
-		N = n; 
+		N = n;
 		p = new int[N];
 	}
 	void setNum(int index,int number) {
