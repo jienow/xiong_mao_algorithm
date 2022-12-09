@@ -38,7 +38,7 @@ const int M = 1 << 10, K = 110; // k是国王数量
 int n, m; // m表示国王数量，因为我们习惯使用n来表示一个数，m来表示一个值
 vector<int> state; // 表示所有的合法状态
 int id[M]; // id用来表示每个状态和他的下标之间的合法关系
-vector<int> head[N]; // 表示每一个状态都可以转变成为其他状态
+vector<int> head[M]; // 表示每一个状态都可以转变成为其他状态
 int cnt[M]; // cnt表示每个状态里面1的个数，
 
 LL f[N][K][M]; // 状态表示
