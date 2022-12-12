@@ -44,23 +44,23 @@ $N \\le 100,M \\le 10$
     6
 */
 
-
 #include <iostream>
 #include <vector>
 using namespace std;
 const int N = 10, M = 1 << N;
 int f[2][M][M];
-vector<int> state;
-int n, m;
 int g[1010];
+vector<int> state;
 int cnt[M];
-bool check(int state) {
+int n, m;
+bool check(int state) { // 检查一个状态横向是否正常
     for (int i = 0; i < m; i++)
-        if ((state >> i & 1) && (state >> i + 1 & 1) || (state >> i + 2 & 1))
+        if ((state >> i & 1) && ((state >> i + 1 & 1) || (state >> i + 2) & 1))
             return false;
     return true;
 }
-int count(int state) {
+int count(int state) // 计算一个状态有多少个1
+{
     int res = 0;
     for (int i = 0; i < m; i++)
         if (state >> i & 1)
@@ -69,36 +69,32 @@ int count(int state) {
 }
 int main() {
     cin >> n >> m;
-    // 读入数据
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= n; i++) // 读入数据
         for (int j = 0; j < m; j++)
         {
             char c; cin >> c;
             g[i] += (c == 'H') << j;
         }
-    // 搜索所有的可能方案
-    for (int i = 0; i < (1 << m); i++)
-        if (check(i)) {
+    for (int i = 0; i < 1 << m; i++) // 遍历所有的撞他i
+        if (check(i)) { // 检查状态的合法性
             state.push_back(i);
             cnt[i] = count(i);
         }
-    // 状态转移方程
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= n; i++) // 遍历n行
         for (int j = 0; j < state.size(); j++)
             for (int k = 0; k < state.size(); k++)
-                for (int u = 0; u < state.size(); u++)
+                for (int u = 0; u < state.size(); u++) // 三个状态遍历
                 {
-                    int a = state[j], b = state[k], c = state[u];
-                    if (a & b | a & c | b & c)continue;
-                    if (g[i] & b | g[i-1] & a) continue;
-                    f[i & 1][j][k] = max(f[i & 1][j][k], f[i - 1 & 1][u][j] + cnt[b]);
+                    int a = state[j], b = state[k], c = state[u]; // 拿到状态
+                    if (a & b | b & c | a & c) continue; // 纵向不可以
+                    if (g[i] & b) continue; // 山地检查
+                    f[i & 1][j][k] = max(f[i & 1][j][k], f[i - 1 & 1][u][j] + cnt[b]); 
+                    // 检查所有的地方 j -> k 可以从 u -> j 的状态 + 当前状态的数量
                 }
     int res = 0;
-    for (int i = 0; i < state.size(); i++)
+    for (int i = 0; i < state.size(); i++) // 遍历所有的地方求最大值
         for (int j = 0; j < state.size(); j++)
             res = max(res, f[n & 1][i][j]);
     cout << res << endl;
-
-
     return 0;
 }
