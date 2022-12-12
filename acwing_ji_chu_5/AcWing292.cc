@@ -89,7 +89,7 @@ int main() {
                 for (int u = 0; u < state.size(); u++)
                 {
                     int a = state[j], b = state[k], c = state[u];
-                    if (a & b || a & c || b & c)continue;
+                    if (a & b | a & c | b & c)continue;
                     if (g[i] & b | g[i-1] & a) continue;
                     f[i & 1][j][k] = max(f[i & 1][j][k], f[i - 1 & 1][u][j] + cnt[b]);
                 }
