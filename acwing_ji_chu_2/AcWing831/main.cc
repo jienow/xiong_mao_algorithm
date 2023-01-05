@@ -1,41 +1,28 @@
 #include <iostream>
+#include <string>
 using namespace std;
-const int N = 2e5 + 20;
-char str[N];
-int son[N][26], cnt[N], idx;
-/*
-* son 与 cnt两个数组基本上可以看成是平行的两个数组，idx同时控制着两个数组
-*/
-int n;
-void insert(char str[]) {
-	int p = 0;
-	for (int i = 0; str[i]; i++) {
-		char u = str[i];
-		if (!son[p][u]) son[p][u] = ++idx; // 这里只能是++idx，因为0在这里同时也代表着没有被使用，而idx一开始就是0
-		p = son[p][u];
-	}
-	cnt[p] ++;
-}
-int query(char str[]) {
-	int p = 0;
-	for (int i = 0; str[i]; i++) {
-		char u = str[i];
-		if (!son[p][u]) return 0;
-		p = son[p][u];
-	}
-	return cnt[p];
-}
+const int N = 1e5 + 10, M = 1e6 + 10;
+int n, m, ne[N];
+char q[N], s[M];
 int main() {
 	ios::sync_with_stdio(false);
-	cin >> n;
-	while (n--) {
-		char op[2]; cin >> op >> str;
-		if (op[0] == 'I') 
-			insert(str);
-		else {
-			int a = query(str);
-			cout << a << endl;
+	scanf("%d%s%d%s", &n, q + 1, &m, s + 1);
+
+	for (int i = 2, j = 0; i <= n; i++) { // i表示的是主串，而j表示的是匹配串
+		while (j /*如果j没有ne到初始点*/ && q[i] != q[j + 1]) j = ne[j]; // 回到ne点上
+		if (q[i] == q[j + 1]) j++; // 如果相等那就到下一个点上
+		ne[i] = j; // 读入ne值
+	}
+
+	for (int i = 2, j = 1; i <= m; i++) { // 两个串不一定非得同步增减
+		while (j && s[i] != q[j + 1])j = ne[j];
+		if (s[i] == q[j + 1]) j++;
+		if (j == n) {
+			cout << i - j << " ";
+			j = ne[j];
 		}
 	}
+
+
 	return 0;
 }
