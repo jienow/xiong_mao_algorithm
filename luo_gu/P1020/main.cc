@@ -1,36 +1,31 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
 const int N = 1e5 + 10;
-int f[N], sz = 1;
-int h[N], q[N];
-int num, n;
+int f[N], q[N], g[N], n;
 int main() {
 	ios::sync_with_stdio(false);
-
-	while (cin >> num) {
-		h[sz++] = num;
-	}
-	sz -= 1;
+	while (cin >> f[n]) n++;
 
 	int res = 0;
-	for (int i = sz; i >= 1; i--) {
+	for (int i = n - 1; i >= 0; i--) {
 		q[i] = 1;
-		for (int j = sz; j > i; j--)
-			if (h[i] > h[j])
+		for (int j = n - 1; j > i; j--)
+			if (f[i] >= f[j])
 				q[i] = max(q[i], q[j] + 1);
 		res = max(res, q[i]);
 	}
 	cout << res << endl;
-
-
-	for (int j = 1; j <= sz; j++)
+	
+	int cnt = 0;
+	for (int i = 0; i < n; i++)
 	{
-		int num = h[j];
-		int i = 1;
-		while (i <= n && f[i] < num) i++;
-		if (i == n + 1) n++;
-		f[i] = num;
+		int k = 0;
+		while (k < cnt && g[k] < f[i]) k++;
+		g[k] = f[i];
+		if (k >= cnt) cnt++;
 	}
-	cout << n;
+	cout << cnt << endl;
+
 	return 0;
 }
