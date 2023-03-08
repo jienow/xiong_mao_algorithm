@@ -17,6 +17,14 @@ int find(int num) {
 	return l + 1;
 }
 int main() {
+
+
+	string a{ "12" };
+	cout << (a == "a"s) << endl;
+
+
+
+
 	ios::sync_with_stdio(false);
 	int n, m; cin >> n >> m;
 	while (n--) {
